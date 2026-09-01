@@ -1,8 +1,8 @@
 # Product Demo skill
 
-An open Codex skill for recording real product workflows and rendering smooth, telemetry-driven, Screen Studio-style demo videos.
+An open Codex skill for recording real product workflows and rendering smooth, telemetry-driven, Screen Studio-style demo videos in landscape, portrait, and square formats.
 
-The workflow adds a reconstructed cursor, click-synchronized camera moves, tactile click feedback, branded framing, action captions, and reproducible MP4 output while keeping private sessions and generated media out of git.
+The workflow adds a reconstructed cursor, click-synchronized camera moves, tactile click feedback, branded framing, action captions, and reproducible MP4 output while keeping private sessions and generated media out of git. One capture can produce all three formats through action-aware reframing rather than fixed center crops.
 
 Channel-specific skills can wrap this core for YouTube production, personal-brand presentation, or Marketplace review requirements without duplicating the capture and motion system.
 

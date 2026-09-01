@@ -25,6 +25,17 @@ This preset captures the useful parts of Screen Studio-style product recordings 
 
 The camera transform must depend on telemetry and time, not transient DOM layout changes. UI repainting must not change the computed pose.
 
+## Aspect-ratio reframing
+
+- Capture the real product once at a stable source viewport; reuse its frames and telemetry for each requested master.
+- Use 1920x1080 for landscape, 1080x1920 for portrait, and 1080x1080 for square unless the target platform specifies another resolution.
+- Show the full source view at rest so viewers understand the product context.
+- Map the settled focus scale per output. A dense desktop source may need roughly 3x or more in portrait while 1.6-1.9x remains suitable in landscape and square.
+- Center the recorded action target inside the available output, then clamp only enough to avoid exposing empty source bounds.
+- Do not stretch the source, use optical-flow interpolation, or apply the same fixed center crop to every format.
+- Keep portrait captions away from the bottom and right-edge controls used by short-form mobile players.
+- Review each output at its intended display size; a crop that is legible on a desktop preview may still fail on a phone.
+
 ## Cursor preset
 
 - Reconstruct a vector cursor from telemetry and hide the captured cursor.

@@ -1,6 +1,6 @@
 ---
 name: product-demo
-description: Record and render polished, Screen Studio-style walkthroughs of a real product with interaction telemetry, a smooth synthetic cursor, stable click-focused camera moves, tactile click feedback, and reproducible MP4 output. Use for real product screen recordings that need automated capture and motion polish. Do not use for a fully animated promo with no real product interaction.
+description: Record and render polished, Screen Studio-style walkthroughs of a real product with interaction telemetry, a smooth synthetic cursor, stable click-focused camera moves, tactile click feedback, and reproducible landscape, portrait, or square MP4 output. Use for real product screen recordings that need automated capture and motion polish. Do not use for a fully animated promo with no real product interaction.
 ---
 
 # Product Demo
@@ -57,6 +57,16 @@ Smooth the synthetic cursor with a zero-velocity ease, cap its speed, and fade i
 
 Read [references/motion-and-capture.md](references/motion-and-capture.md) for the full timing preset, cadence rules, and jitter checks.
 
+## Reframe for each output
+
+When the brief needs more than one aspect ratio, capture the real flow once and render each format from the same source frames and telemetry. Use standard masters unless the calling wrapper specifies another platform requirement:
+
+- landscape: 1920x1080;
+- portrait: 1080x1920;
+- square: 1080x1080.
+
+Begin every version with the complete product view. During action beats, map the recorded target bounds and camera focus into that format instead of stretching the footage or applying one fixed center crop. Portrait usually needs a stronger settled zoom than landscape so the active text and controls remain readable on a phone. Keep captions inside the target platform's safe area and inspect each version independently.
+
 ## Click feedback
 
 Drive the ripple, cursor press, and sound from the same click timestamp. Do not use recorded system audio as the timing source.
@@ -81,7 +91,7 @@ Match output cadence to source cadence or use an integer multiple. Do not stretc
 
 ## Inspect before delivery
 
-Run tests and type checks, then render the real MP4. Inspect:
+Run tests and type checks, then render every requested real MP4. Inspect:
 
 - the opening and final frames;
 - every zoom transition;
@@ -92,6 +102,7 @@ Run tests and type checks, then render the real MP4. Inspect:
 - private-data masks;
 - audio peaks and clipping;
 - text sharpness and any UI jitter;
+- action framing, caption safe areas, and readability in every aspect ratio;
 - the target platform's actual player or upload preview when available.
 
 Fix visible timing, framing, cursor, privacy, or audio faults before reporting completion. A successful render command is not visual QA.
