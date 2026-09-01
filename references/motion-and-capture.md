@@ -47,7 +47,7 @@ Use this only when the brief asks to keep the output zoomed in:
 - Let the smoothed cursor guide the visible crop with a short lag. Clamp at source edges instead of snapping or revealing empty canvas.
 - Layer a tighter click focus above the persistent crop. The Screen Studio vertical reference uses roughly another 1.8-2x above its base crop, but target bounds and readability determine the final scale.
 - Ease between the persistent and focused poses over roughly 1-1.5 seconds. Hold one focus through a related interaction and return to the persistent crop after the result hold.
-- Compute a safe persistent scale across the recording's interaction sessions. It must never force a click transition to zoom out merely to recover a wide active control.
+- Preserve the aspect-filling persistent crop. Protect the pointer and the readable active region by shifting the crop when needed, but do not shrink the whole portrait composition merely to fit an unrelated or unusually wide desktop control; nonessential outer edges may crop.
 - Keep overview and persistent framing as separate render modes so one capture can produce both without being recorded again.
 - For the final interaction, hold the focused result through the end instead of returning to a cursor-led crop after the pointer has faded.
 
