@@ -160,6 +160,24 @@ describe("public product-demo engine", () => {
     assert.deepEqual(mask.rect, { x: 90, y: 70, width: 400, height: 90 });
   });
 
+  it("keeps blur tight by default while solid masks retain safety padding", () => {
+    const rect = { x: 100, y: 80, width: 180, height: 30 };
+    const [blur] = activePrivacyMasksAt(0, [{
+      id: "blurred-field",
+      reason: "personal identifier",
+      treatment: "blur",
+      rect,
+    }]);
+    const [solid] = activePrivacyMasksAt(0, [{
+      id: "covered-field",
+      reason: "secret",
+      treatment: "solid",
+      rect,
+    }]);
+    assert.deepEqual(blur.rect, rect);
+    assert.deepEqual(solid.rect, { x: 92, y: 72, width: 196, height: 46 });
+  });
+
   it("keeps an unbounded privacy mask active for the full recording", () => {
     const masks = [{
       id: "contact-phone",
