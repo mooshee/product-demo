@@ -145,6 +145,21 @@ describe("public product-demo engine", () => {
     assert.deepEqual(mask.rect, { x: 90, y: 70, width: 400, height: 50 });
   });
 
+  it("preserves blur while a post-processing mask tracks a moving element", () => {
+    const [mask] = activePrivacyMasksAt(1_500, [{
+      id: "moving-account-field",
+      reason: "personal identifier",
+      treatment: "blur",
+      rectTrack: [
+        { tMs: 1_000, x: 100, y: 80, width: 180, height: 30 },
+        { tMs: 2_000, x: 300, y: 120, width: 180, height: 30 },
+      ],
+      paddingPx: 10,
+    }]);
+    assert.equal(mask.treatment, "blur");
+    assert.deepEqual(mask.rect, { x: 90, y: 70, width: 400, height: 90 });
+  });
+
   it("keeps an unbounded privacy mask active for the full recording", () => {
     const masks = [{
       id: "contact-phone",
