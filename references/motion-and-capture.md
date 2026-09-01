@@ -31,13 +31,24 @@ The camera transform must depend on telemetry and time, not transient DOM layout
 ## Aspect-ratio reframing
 
 - Capture the real product once at a stable source viewport; reuse its frames and telemetry for each requested master.
-- Use 1920x1080 for landscape, 1080x1920 for portrait, and 1080x1080 for square unless the target platform specifies another resolution.
-- Show the full source view at rest so viewers understand the product context.
+- Support source/Auto, Wide 16:9, Vertical 9:16, Square 1:1, Classic 4:3, and Tall 3:4. Use 1920x1080 for landscape, 1080x1920 for portrait, 1080x1080 for square, 1440x1080 for classic, and 1080x1440 for tall unless the target platform specifies another resolution.
+- Use overview framing by default and show the full source view at rest so viewers understand the product context.
 - Map the settled focus scale per output. A dense desktop source may need roughly 3x or more in portrait while 1.6-1.9x remains suitable in landscape and square.
 - Center the recorded action target inside the available output, then clamp only enough to avoid exposing empty source bounds.
 - Do not stretch the source, use optical-flow interpolation, or apply the same fixed center crop to every format.
 - Keep portrait captions away from the bottom and right-edge controls used by short-form mobile players.
 - Review each output at its intended display size; a crop that is legible on a desktop preview may still fail on a phone.
+
+### Persistent cursor-follow framing
+
+Use this only when the brief asks to keep the output zoomed in:
+
+- Fill the selected aspect ratio between interactions instead of returning to the full overview. For a 16:9 desktop source in a 9:16 output, roughly 2.5-3x is a useful base range.
+- Let the smoothed cursor guide the visible crop with a short lag. Clamp at source edges instead of snapping or revealing empty canvas.
+- Layer a tighter click focus above the persistent crop. The Screen Studio vertical reference uses roughly another 1.8-2x above its base crop, but target bounds and readability determine the final scale.
+- Ease between the persistent and focused poses over roughly 1-1.5 seconds. Hold one focus through a related interaction and return to the persistent crop after the result hold.
+- Compute a safe persistent scale across the recording's interaction sessions. It must never force a click transition to zoom out merely to recover a wide active control.
+- Keep overview and persistent framing as separate render modes so one capture can produce both without being recorded again.
 
 ## Cursor preset
 

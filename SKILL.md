@@ -1,6 +1,6 @@
 ---
 name: product-demo
-description: Record and render polished, Screen Studio-style walkthroughs of a real product with interaction telemetry, a smooth synthetic cursor, stable click-focused camera moves, tactile click feedback, and reproducible landscape, portrait, or square MP4 output. Use for real product screen recordings that need automated capture and motion polish. Do not use for a fully animated promo with no real product interaction.
+description: Record and render polished, Screen Studio-style walkthroughs of a real product with interaction telemetry, a smooth synthetic cursor, stable click-focused camera moves, tactile click feedback, aspect-aware MP4 output, and optional persistent cursor-follow framing. Use for real product screen recordings that need automated capture and motion polish. Do not use for a fully animated promo with no real product interaction.
 ---
 
 # Product Demo
@@ -61,13 +61,13 @@ Read [references/motion-and-capture.md](references/motion-and-capture.md) for th
 
 ## Reframe for each output
 
-When the brief needs more than one aspect ratio, capture the real flow once and render each format from the same source frames and telemetry. Use standard masters unless the calling wrapper specifies another platform requirement:
+When the brief needs more than one aspect ratio, capture the real flow once and render each format from the same source frames and telemetry. Support the common output choices: source/Auto, Wide 16:9, Vertical 9:16, Square 1:1, Classic 4:3, and Tall 3:4. Use standard masters unless the calling wrapper specifies another platform requirement:
 
 - landscape: 1920x1080;
 - portrait: 1080x1920;
 - square: 1080x1080.
 
-Begin every version with the complete product view. During action beats, map the recorded target bounds and camera focus into that format instead of stretching the footage or applying one fixed center crop. Portrait usually needs a stronger settled zoom than landscape so the active text and controls remain readable on a phone. Keep captions inside the target platform's safe area and inspect each version independently.
+Use overview framing by default: begin with the complete product view, then map the recorded target bounds and camera focus into each format instead of stretching the footage or applying one fixed center crop. When the brief asks to keep the output zoomed in, use a persistent aspect-filling crop between interactions, let the smoothed cursor guide that crop, and layer the click focus above it. Cap both layers when the requested scale would crop an active control or settled cursor path. Read [references/motion-and-capture.md](references/motion-and-capture.md) before implementing this mode.
 
 ## Click feedback
 
