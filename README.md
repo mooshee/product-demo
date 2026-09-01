@@ -2,7 +2,23 @@
 
 An open, scriptable toolkit for Screen Studio-style real-product walkthroughs. It records real interactions and renders smooth, telemetry-driven demo videos in source, wide, vertical, square, classic, and tall formats, with optional persistent cursor-follow framing. It automates capture and motion polish; it is not a clone or full replacement for Screen Studio's desktop editor.
 
-The workflow adds a reconstructed cursor, click-synchronized camera moves, caret-follow typing, tactile click feedback, source-tracked privacy masks, branded framing, action captions, and reproducible MP4 output while keeping private sessions and generated media out of git. One capture can produce every supported format through action-aware reframing rather than fixed center crops.
+The workflow adds a reconstructed cursor, click-synchronized camera moves, caret-follow typing, tactile click feedback, source-tracked privacy masks, branded framing, action captions, and reproducible MP4 output while keeping private sessions and product-specific working renders out of git. One capture can produce every supported format through action-aware reframing rather than fixed center crops.
+
+## See it in motion
+
+Click either animated preview to watch the full H.264 MP4 with sound.
+
+### Screen Studio-style polish, fully scripted
+
+[![Product Demo adding automatic camera moves, a reconstructed cursor, caret-follow typing, and click feedback to a real product workflow](examples/screen-studio-style-product-demo.gif)](examples/screen-studio-style-product-demo.mp4)
+
+Record one real flow, then apply smooth camera moves, cursor motion, typing focus, click feedback, captions, and aspect-aware reframing through code.
+
+### Privacy from capture through export
+
+[![The same LinePort recording comparing blur applied before capture with tracked blur applied to existing footage](examples/privacy-blur-comparison.gif)](examples/privacy-blur-comparison.mp4)
+
+New recordings can blur a measured DOM element before its pixels are captured. Existing footage uses the same tight element bounds inside the transformed source layer, so the blur follows every camera move without covering neighboring controls.
 
 The repository includes a tested TypeScript engine template under `assets/engine`. It provides the reusable camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, real workflow, branding, captions, and compositor shell.
 

@@ -38,7 +38,8 @@ export const privacyMaskRectAt = (
     else if (nextIndex === 0) rect = track[0];
     else rect = unionRects(track[nextIndex - 1], track[nextIndex]);
   }
-  return rect ? expandRect(rect, Math.max(0, mask.paddingPx ?? 8)) : undefined;
+  const defaultPaddingPx = mask.treatment === "blur" ? 0 : 8;
+  return rect ? expandRect(rect, Math.max(0, mask.paddingPx ?? defaultPaddingPx)) : undefined;
 };
 
 export const activePrivacyMasksAt = (
