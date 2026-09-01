@@ -9,7 +9,7 @@ Channel-specific skills can wrap this core for YouTube production, personal-bran
 ## Install
 
 ```bash
-npx skills add mooshee/product-demo
+npx skills add mooshee/product-demo -g
 ```
 
 Or copy this repository into your Codex skills directory as `product-demo`.
