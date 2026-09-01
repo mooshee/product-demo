@@ -37,7 +37,7 @@ Capture a stable product viewport and log, on the same monotonic clock:
 - typing start, end, and caret samples after each character;
 - named result beats and optional captions.
 
-Use fictional or synthetic records whenever possible. Sanitize known private fields before capture, then define fixed or tracked privacy masks for anything that must remain on screen. Privacy masks use source coordinates so they move with the camera and every aspect-ratio render. Prefer opaque coverage for secrets and personal data; blur and pixelation can leak shape, length, or content. Read [references/privacy.md](references/privacy.md) before recording any authenticated product, customer-like record, notification surface, or account screen.
+Use fictional or synthetic records whenever possible. Sanitize known private fields before capture, then define fixed or tracked privacy masks for anything that must remain on screen. Privacy masks use source coordinates so they move with the camera and every aspect-ratio render. Keep secrets behind opaque replacements. For ordinary personal data, use either an opaque replacement or a strong, tinted blur that remains unreadable at full resolution. Light blur and coarse pixelation can leak shape, length, or content. Read [references/privacy.md](references/privacy.md) before recording any authenticated product, customer-like record, notification surface, or account screen.
 
 Hide the native cursor when practical and reconstruct it from telemetry. A click should be recorded only when it advances the story; do not log setup clicks, hover probes, or cleanup movements.
 

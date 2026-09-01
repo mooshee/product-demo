@@ -145,6 +145,32 @@ describe("public product-demo engine", () => {
     assert.deepEqual(mask.rect, { x: 90, y: 70, width: 400, height: 50 });
   });
 
+  it("keeps an unbounded privacy mask active for the full recording", () => {
+    const masks = [{
+      id: "contact-phone",
+      reason: "personal identifier",
+      rect: { x: 300, y: 820, width: 140, height: 28 },
+      treatment: "blur" as const,
+    }];
+    assert.equal(activePrivacyMasksAt(0, masks).length, 1);
+    assert.equal(activePrivacyMasksAt(log.durationMs, masks).length, 1);
+    assert.equal(activePrivacyMasksAt(99_000, masks).length, 1);
+  });
+
+  it("honors an explicit privacy-mask visibility window", () => {
+    const masks = [{
+      id: "temporary-dialog",
+      reason: "personal identifier",
+      rect: { x: 300, y: 820, width: 140, height: 28 },
+      startMs: 2_000,
+      endMs: 4_000,
+    }];
+    assert.equal(activePrivacyMasksAt(1_999, masks).length, 0);
+    assert.equal(activePrivacyMasksAt(2_000, masks).length, 1);
+    assert.equal(activePrivacyMasksAt(4_000, masks).length, 1);
+    assert.equal(activePrivacyMasksAt(4_001, masks).length, 0);
+  });
+
   it("projects privacy regions through the same camera pose as the source", () => {
     const pose = engine.cameraFrameAt(7_000, log, "portrait", "always-zoomed");
     const rect = { x: 600, y: 120, width: 240, height: 32 };
