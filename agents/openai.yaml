@@ -1,5 +1,0 @@
-# Authored by Daniel Hallman.
-interface:
-  display_name: "Product Demo"
-  short_description: "Scriptable Screen Studio-style product demos"
-  default_prompt: "Use $product-demo to record and render a polished, privacy-safe product walkthrough."

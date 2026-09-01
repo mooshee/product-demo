@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scripted Product Demo"
+  short_description: "Telemetry-driven product demo videos"
+  default_prompt: "Use $scripted-product-demo to record a polished, repeatable walkthrough of this product's core workflow."
