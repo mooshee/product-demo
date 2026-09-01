@@ -22,7 +22,7 @@ This preset captures the useful parts of Screen Studio-style product recordings 
 - Group related clicks. A new click in the same region extends the session and resets the result hold.
 - Start around 1.6–1.9× for dense desktop UI, then adjust to preserve target context and readable copy.
 - Derive the session focus from target bounds, but allow a manual safe-frame override when the average clips important content.
-- Build the safe frame from the union of every active target rectangle and the cursor samples used after the camera settles. Keep a focused text field protected until its typing span ends.
+- Build the safe frame from the controls required by the current phase and the cursor samples used after the camera settles. A typing detail may crop an inactive field edge while keeping the entered text readable. The pre-submit phase must contain the complete field and its related button.
 - Cap the requested zoom at the largest scale that fits that safe frame with room for the cursor. A smaller readable zoom is better than a clipped field or pointer.
 - While easing in, constrain the moving pointer to the frame edge if needed. Do not chase it once the camera reaches the stable session pose.
 
@@ -71,6 +71,9 @@ Use this only when the brief asks to keep the output zoomed in:
 - Play the complete click transient; do not cut a press/release sample to an arbitrary frame count.
 - Pause 0.3–0.4 seconds after focusing a field before typing.
 - Type through the real UI at a short fixed delay or time-compress a logged typing span. Do not replace the UI with fabricated text.
+- Treat typing and submit as linked camera phases. Mark both events with an interaction kind and shared interaction group; do not infer the relationship from labels such as `Send` or `Save`.
+- Keep a tighter, stable detail while characters enter. Start the pullback when typing ends, aim for about two seconds of lead when capture timing permits, use a 1.4–1.6 second ease, and settle 0.3–0.6 seconds before the submit click.
+- The settled submit pose must show the complete field and button together, even when that requires a smaller scale than the typing detail.
 
 ## Prevent jitter
 

@@ -23,7 +23,9 @@ Store all times as integer milliseconds from one monotonic recording start. Coor
       "label": "Open the provider picker",
       "cluster": "provider",
       "caption": "Choose a sending account",
-      "typeEndMs": null
+      "typeEndMs": null,
+      "interactionKind": "control",
+      "interactionGroup": null
     }
   ]
 }
@@ -39,6 +41,8 @@ Store all times as integer milliseconds from one monotonic recording start. Coor
 - `tDepartMs <= tMs`.
 - `typeEndMs`, when present, is not earlier than `tMs` and does not exceed the duration.
 - `label` describes the action; `cluster` groups clicks that should share one camera pose.
+- `interactionKind` is `control`, `typing`, or `submit`. Use `typing` and `submit` only for linked text-entry flows.
+- A linked typing and submit pair shares one non-empty `interactionGroup`. This drives the close typing detail and the full field-plus-button pose before submission; camera code must not guess from labels.
 - Captions are optional and should add meaning rather than restate a visible button label.
 
 Run:

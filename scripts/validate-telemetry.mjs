@@ -34,6 +34,7 @@ if (!Array.isArray(log.clicks)) fail("clicks must be an array");
 
 const width = log.viewport?.width;
 const height = log.viewport?.height;
+const interactionKinds = new Set(["control", "typing", "submit"]);
 let previousCursorTime = -1;
 for (const [index, sample] of (log.cursorTrack ?? []).entries()) {
   if (!finite(sample.tMs) || sample.tMs < previousCursorTime || sample.tMs > log.durationMs) {
@@ -63,7 +64,34 @@ for (const [index, click] of (log.clicks ?? []).entries()) {
   if (click.typeEndMs != null && (!finite(click.typeEndMs) || click.typeEndMs < click.tMs || click.typeEndMs > log.durationMs)) {
     fail(`${prefix}.typeEndMs must be between tMs and durationMs`);
   }
+  if (click.interactionKind != null && !interactionKinds.has(click.interactionKind)) {
+    fail(`${prefix}.interactionKind must be control, typing, or submit`);
+  }
+  if (["typing", "submit"].includes(click.interactionKind)
+    && (typeof click.interactionGroup !== "string" || !click.interactionGroup.trim())) {
+    fail(`${prefix}.interactionGroup must link typing and submit events`);
+  }
+  if (click.interactionKind === "typing" && click.typeEndMs == null) {
+    fail(`${prefix}.typeEndMs is required for a typing interaction`);
+  }
   previousClickTime = click.tMs;
+}
+
+for (const [index, click] of (log.clicks ?? []).entries()) {
+  if (click.interactionKind === "typing") {
+    const submit = log.clicks.slice(index + 1).find((candidate) =>
+      candidate.interactionKind === "submit"
+      && candidate.interactionGroup === click.interactionGroup
+    );
+    if (!submit) fail(`clicks[${index}] must have a later submit in interactionGroup ${click.interactionGroup}`);
+  }
+  if (click.interactionKind === "submit") {
+    const typing = log.clicks.slice(0, index).find((candidate) =>
+      candidate.interactionKind === "typing"
+      && candidate.interactionGroup === click.interactionGroup
+    );
+    if (!typing) fail(`clicks[${index}] must have an earlier typing event in interactionGroup ${click.interactionGroup}`);
+  }
 }
 
 if (errors.length) {
