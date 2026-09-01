@@ -1,0 +1,43 @@
+name: Validate public skill
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: skills/scripted-product-demo/assets/engine/package-lock.json
+
+      - name: Validate skill package layout
+        shell: bash
+        run: |
+          test ! -f SKILL.md
+          test -f skills/scripted-product-demo/SKILL.md
+          test -f skills/scripted-product-demo/agents/openai.yaml
+          test -x skills/scripted-product-demo/scripts/install-engine.sh
+          test -x skills/scripted-product-demo/scripts/prepare-click-audio.sh
+          test -x skills/scripted-product-demo/scripts/validate-telemetry.mjs
+          grep -q '^name: scripted-product-demo$' skills/scripted-product-demo/SKILL.md
+          grep -q '\$scripted-product-demo' skills/scripted-product-demo/agents/openai.yaml
+
+      - name: Test and type-check the motion engine
+        working-directory: skills/scripted-product-demo/assets/engine
+        run: |
+          npm ci
+          npm test
+          npm run typecheck
