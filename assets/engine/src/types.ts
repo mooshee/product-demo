@@ -2,7 +2,27 @@
 export type Rect = { x: number; y: number; width: number; height: number };
 export type Point = { x: number; y: number };
 export type TimedPoint = Point & { tMs: number };
+export type TimedRect = Rect & { tMs: number };
 export type Pose = { scale: number; cx: number; cy: number };
+
+export type PrivacyTreatment = "solid" | "pixelate" | "blur";
+export type PrivacyMask = {
+  id: string;
+  reason: string;
+  startMs?: number;
+  endMs?: number;
+  rect?: Rect;
+  rectTrack?: TimedRect[];
+  paddingPx?: number;
+  treatment?: PrivacyTreatment;
+};
+
+export type ActivePrivacyMask = {
+  id: string;
+  reason: string;
+  rect: Rect;
+  treatment: PrivacyTreatment;
+};
 
 export type ClickEvent = TimedPoint & {
   tDepartMs: number;
@@ -23,6 +43,7 @@ export type ClickLog = {
   durationMs: number;
   cursorTrack: TimedPoint[];
   clicks: ClickEvent[];
+  privacyMasks?: PrivacyMask[];
 };
 
 export type ProductDemoStyle = {

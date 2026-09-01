@@ -1,10 +1,10 @@
 # Product Demo skill
 
-An open Codex skill for recording real product workflows and rendering smooth, telemetry-driven, Screen Studio-style demo videos in source, wide, vertical, square, classic, and tall formats, with optional persistent cursor-follow framing.
+An open, scriptable toolkit for Screen Studio-style real-product walkthroughs. It records real interactions and renders smooth, telemetry-driven demo videos in source, wide, vertical, square, classic, and tall formats, with optional persistent cursor-follow framing. It automates capture and motion polish; it is not a clone or full replacement for Screen Studio's desktop editor.
 
-The workflow adds a reconstructed cursor, click-synchronized camera moves, caret-follow typing, tactile click feedback, branded framing, action captions, and reproducible MP4 output while keeping private sessions and generated media out of git. One capture can produce every supported format through action-aware reframing rather than fixed center crops.
+The workflow adds a reconstructed cursor, click-synchronized camera moves, caret-follow typing, tactile click feedback, source-tracked privacy masks, branded framing, action captions, and reproducible MP4 output while keeping private sessions and generated media out of git. One capture can produce every supported format through action-aware reframing rather than fixed center crops.
 
-The repository includes a tested TypeScript engine template under `assets/engine`. It provides the reusable camera, cursor, caret, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, real workflow, branding, captions, and compositor shell.
+The repository includes a tested TypeScript engine template under `assets/engine`. It provides the reusable camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, real workflow, branding, captions, and compositor shell.
 
 Channel-specific skills can wrap this core for YouTube production, personal-brand presentation, or Marketplace review requirements without duplicating the capture and motion system.
 

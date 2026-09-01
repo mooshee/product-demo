@@ -1,11 +1,11 @@
 ---
 name: product-demo
-description: Record and render polished, Screen Studio-style walkthroughs of a real product with interaction telemetry, a smooth synthetic cursor, stable click-focused camera moves, tactile click feedback, aspect-aware MP4 output, and optional persistent cursor-follow framing. Use for real product screen recordings that need automated capture and motion polish. Do not use for a fully animated promo with no real product interaction.
+description: Record and render polished, Screen Studio-style real-product walkthroughs with interaction telemetry, smooth cursor motion, automatic camera moves, privacy masks, click feedback, and aspect-aware MP4 output. Use when a product demo needs repeatable capture and automatic motion polish. Do not use for a fully animated promo with no real product interaction or when a manual desktop editor is the requested deliverable.
 ---
 
 # Product Demo
 
-Create a clear, polished walkthrough from real product interactions. Treat the running product and its verified documentation as the source of truth. Never fabricate screens, delivery states, permissions, results, analytics, contacts, or capabilities.
+Use this open, scriptable toolkit to create Screen Studio-style product demos from real interaction telemetry. It automates capture and motion polish; it is not a clone or full replacement for Screen Studio's desktop editor. Treat the running product and its verified documentation as the source of truth. Never fabricate screens, delivery states, permissions, results, analytics, contacts, or capabilities.
 
 ## Accept the recording brief
 
@@ -37,6 +37,8 @@ Capture a stable product viewport and log, on the same monotonic clock:
 - typing start, end, and caret samples after each character;
 - named result beats and optional captions.
 
+Use fictional or synthetic records whenever possible. Sanitize known private fields before capture, then define fixed or tracked privacy masks for anything that must remain on screen. Privacy masks use source coordinates so they move with the camera and every aspect-ratio render. Prefer opaque coverage for secrets and personal data; blur and pixelation can leak shape, length, or content. Read [references/privacy.md](references/privacy.md) before recording any authenticated product, customer-like record, notification surface, or account screen.
+
 Hide the native cursor when practical and reconstruct it from telemetry. A click should be recorded only when it advances the story; do not log setup clicks, hover probes, or cleanup movements.
 
 Read [references/telemetry.md](references/telemetry.md) when creating or adapting a recorder. Validate the resulting JSON with `scripts/validate-telemetry.mjs`.
@@ -53,7 +55,7 @@ npm test
 npm run typecheck
 ```
 
-The template in `assets/engine` owns camera sessions, cursor motion, aspect-aware framing, caret capture and tracking, typing-to-submit phases, standard output presets, and regression tests. Keep those modules product-neutral. The adapter owns the real flow, selectors, consent-sensitive actions, brand frame, captions, composition registration, and render command. Change a shared motion rule in the public engine first, then consume it from adapters; do not fork behavior silently.
+The template in `assets/engine` owns camera sessions, cursor motion, aspect-aware framing, caret capture and tracking, privacy-mask projection, typing-to-submit phases, standard output presets, and regression tests. Keep those modules product-neutral. The adapter owns the real flow, selectors, consent-sensitive actions, brand frame, captions, composition registration, and render command. Change a shared motion rule in the public engine first, then consume it from adapters; do not fork behavior silently.
 
 ## Motion and framing
 
@@ -115,7 +117,7 @@ Run tests and type checks, then render every requested real MP4. Inspect:
 - cursor paths and idle fades;
 - typing focus delay;
 - result holds;
-- private-data masks;
+- private-data masks on every frame and output;
 - audio peaks and clipping;
 - text sharpness and any UI jitter;
 - action framing, caption safe areas, and readability in every aspect ratio;
@@ -131,4 +133,4 @@ Use ignored repo-local directories for source captures and renders. Produce at m
 - click and cursor telemetry JSON;
 - render notes with source, cadence, style preset, audio provenance, and known limits.
 
-Never commit authenticated profiles, raw private recordings, generated videos, phone numbers, contact data, tokens, pairing codes, OAuth values, or licensed source audio that cannot be redistributed on its own.
+Never commit authenticated profiles, raw private recordings, generated videos, phone numbers, contact data, tokens, pairing codes, OAuth values, or licensed source audio that cannot be redistributed on its own. Never upload or publish a demo before the requested approval gate.

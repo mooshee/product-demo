@@ -5,7 +5,9 @@ import {
   createProductDemoEngine,
   DEFAULT_DEMO_STYLE,
   DEFAULT_OUTPUT_PRESETS,
+  activePrivacyMasksAt,
   pointAt,
+  projectSourceRect,
   type ClickLog,
 } from "../src/index.js";
 
@@ -127,5 +129,44 @@ describe("public product-demo engine", () => {
       "classic",
       "tall",
     ]);
+  });
+
+  it("covers both positions while a tracked privacy region moves", () => {
+    const [mask] = activePrivacyMasksAt(1_500, [{
+      id: "account-email",
+      reason: "personal identifier",
+      rectTrack: [
+        { tMs: 1_000, x: 100, y: 80, width: 180, height: 30 },
+        { tMs: 2_000, x: 300, y: 80, width: 180, height: 30 },
+      ],
+      paddingPx: 10,
+    }]);
+    assert.equal(mask.treatment, "solid");
+    assert.deepEqual(mask.rect, { x: 90, y: 70, width: 400, height: 50 });
+  });
+
+  it("projects privacy regions through the same camera pose as the source", () => {
+    const pose = engine.cameraFrameAt(7_000, log, "portrait", "always-zoomed");
+    const rect = { x: 600, y: 120, width: 240, height: 32 };
+    const projected = projectSourceRect(
+      rect,
+      pose,
+      DEFAULT_OUTPUT_PRESETS.portrait,
+      log.viewport,
+    );
+    const topLeft = projectPoint({ x: rect.x, y: rect.y }, pose, "portrait");
+    const bottomRight = projectPoint({
+      x: rect.x + rect.width,
+      y: rect.y + rect.height,
+    }, pose, "portrait");
+    const expected = {
+      x: topLeft.x,
+      y: topLeft.y,
+      width: bottomRight.x - topLeft.x,
+      height: bottomRight.y - topLeft.y,
+    };
+    for (const key of ["x", "y", "width", "height"] as const) {
+      assert.ok(Math.abs(projected[key] - expected[key]) < 0.000_001);
+    }
   });
 });

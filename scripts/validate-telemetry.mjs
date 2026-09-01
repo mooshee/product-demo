@@ -31,10 +31,23 @@ if (!positive(log.viewport?.width) || !positive(log.viewport?.height)) {
 if (!finite(log.captureOffsetMs) || log.captureOffsetMs < 0) fail("captureOffsetMs must be non-negative");
 if (!Array.isArray(log.cursorTrack)) fail("cursorTrack must be an array");
 if (!Array.isArray(log.clicks)) fail("clicks must be an array");
+if (log.privacyMasks != null && !Array.isArray(log.privacyMasks)) {
+  fail("privacyMasks must be an array when provided");
+}
+const privacyMasks = Array.isArray(log.privacyMasks) ? log.privacyMasks : [];
 
 const width = log.viewport?.width;
 const height = log.viewport?.height;
 const interactionKinds = new Set(["control", "typing", "submit"]);
+const privacyTreatments = new Set(["solid", "pixelate", "blur"]);
+const rectInsideViewport = (rect) => finite(rect?.x)
+  && finite(rect?.y)
+  && positive(rect?.width)
+  && positive(rect?.height)
+  && rect.x >= 0
+  && rect.y >= 0
+  && rect.x + rect.width <= width
+  && rect.y + rect.height <= height;
 let previousCursorTime = -1;
 for (const [index, sample] of (log.cursorTrack ?? []).entries()) {
   if (!finite(sample.tMs) || sample.tMs < previousCursorTime || sample.tMs > log.durationMs) {
@@ -92,6 +105,42 @@ for (const [index, click] of (log.clicks ?? []).entries()) {
   previousClickTime = click.tMs;
 }
 
+const privacyIds = new Set();
+for (const [index, mask] of privacyMasks.entries()) {
+  const prefix = `privacyMasks[${index}]`;
+  if (typeof mask.id !== "string" || !mask.id.trim()) fail(`${prefix}.id must be a non-empty string`);
+  else if (privacyIds.has(mask.id)) fail(`${prefix}.id must be unique`);
+  else privacyIds.add(mask.id);
+  if (typeof mask.reason !== "string" || !mask.reason.trim()) {
+    fail(`${prefix}.reason must name a data category without repeating the private value`);
+  }
+  if (mask.treatment != null && !privacyTreatments.has(mask.treatment)) {
+    fail(`${prefix}.treatment must be solid, pixelate, or blur`);
+  }
+  if (mask.paddingPx != null && (!finite(mask.paddingPx) || mask.paddingPx < 0)) {
+    fail(`${prefix}.paddingPx must be non-negative`);
+  }
+  const startMs = mask.startMs ?? 0;
+  const endMs = mask.endMs ?? log.durationMs;
+  if (!finite(startMs) || !finite(endMs) || startMs < 0 || endMs < startMs || endMs > log.durationMs) {
+    fail(`${prefix} startMs and endMs must define a valid span within durationMs`);
+  }
+  const hasRect = mask.rect != null;
+  const hasTrack = Array.isArray(mask.rectTrack) && mask.rectTrack.length > 0;
+  if (hasRect === hasTrack) fail(`${prefix} must provide exactly one of rect or rectTrack`);
+  if (hasRect && !rectInsideViewport(mask.rect)) fail(`${prefix}.rect must be inside the viewport`);
+  let previousMaskTime = startMs;
+  for (const [sampleIndex, sample] of (mask.rectTrack ?? []).entries()) {
+    if (!finite(sample.tMs) || sample.tMs < previousMaskTime || sample.tMs > endMs) {
+      fail(`${prefix}.rectTrack[${sampleIndex}].tMs must be sorted and within the mask span`);
+    }
+    if (!rectInsideViewport(sample)) {
+      fail(`${prefix}.rectTrack[${sampleIndex}] must be inside the viewport`);
+    }
+    previousMaskTime = sample.tMs;
+  }
+}
+
 for (const [index, click] of (log.clicks ?? []).entries()) {
   if (click.interactionKind === "typing") {
     const submit = log.clicks.slice(index + 1).find((candidate) =>
@@ -115,5 +164,5 @@ if (errors.length) {
 }
 
 console.log(
-  `Valid telemetry: ${path.basename(telemetryPath)}; ${log.cursorTrack.length} cursor samples; ${log.clicks.length} clicks; ${log.durationMs} ms`,
+  `Valid telemetry: ${path.basename(telemetryPath)}; ${log.cursorTrack.length} cursor samples; ${log.clicks.length} clicks; ${privacyMasks.length} privacy masks; ${log.durationMs} ms`,
 );
