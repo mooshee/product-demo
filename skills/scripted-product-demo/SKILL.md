@@ -1,9 +1,9 @@
 ---
-name: product-demo
-description: Record and render polished, Screen Studio-style real-product walkthroughs with interaction telemetry, smooth cursor motion, automatic camera moves, privacy masks, click feedback, and aspect-aware MP4 output. Use when a product demo needs repeatable capture and automatic motion polish. Do not use for a fully animated promo with no real product interaction or when a manual desktop editor is the requested deliverable.
+name: scripted-product-demo
+description: Create polished, repeatable videos from real product interactions with telemetry-driven capture, smooth cursor motion, automatic camera moves, privacy masks, click feedback, and aspect-aware MP4 output. Use when a product demo needs reproducible capture and motion polish. Do not use for a fully animated promo with no real product interaction or when a manual desktop editor is the requested deliverable.
 ---
 
-# Product Demo
+# Scripted Product Demo
 
 Use this open, scriptable toolkit to create Screen Studio-style product demos from real interaction telemetry. It automates capture and motion polish; it is not a clone or full replacement for Screen Studio's desktop editor. Treat the running product and its verified documentation as the source of truth. Never fabricate screens, delivery states, permissions, results, analytics, contacts, or capabilities.
 
