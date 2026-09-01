@@ -22,6 +22,9 @@ This preset captures the useful parts of Screen Studio-style product recordings 
 - Group related clicks. A new click in the same region extends the session and resets the result hold.
 - Start around 1.6–1.9× for dense desktop UI, then adjust to preserve target context and readable copy.
 - Derive the session focus from target bounds, but allow a manual safe-frame override when the average clips important content.
+- Build the safe frame from the union of every active target rectangle and the cursor samples used after the camera settles. Keep a focused text field protected until its typing span ends.
+- Cap the requested zoom at the largest scale that fits that safe frame with room for the cursor. A smaller readable zoom is better than a clipped field or pointer.
+- While easing in, constrain the moving pointer to the frame edge if needed. Do not chase it once the camera reaches the stable session pose.
 
 The camera transform must depend on telemetry and time, not transient DOM layout changes. UI repainting must not change the computed pose.
 
@@ -46,6 +49,7 @@ The camera transform must depend on telemetry and time, not transient DOM layout
 - Keep travel tilt under roughly five degrees.
 - Use a faint motion trail only above a speed threshold.
 - After the last action, leave the pointer on the completed control and let it fade. Remove telemetry that does not serve an action.
+- Cursor interpolation after the final telemetry timestamp must return the final sample, never the first sample or a default position.
 
 ## Click and typing treatment
 

@@ -55,6 +55,8 @@ Use one stable camera pose for a related click session:
 
 Smooth the synthetic cursor with a zero-velocity ease, cap its speed, and fade it after a short idle hold. Leave it on the completed action until it fades. Never move it away merely to clear the frame. Add a 300–400 ms focus pause after selecting a text field before typing begins.
 
+Fit each settled camera pose to the union of the active controls and the cursor path used after the camera settles. Keep the full focused field visible through its typing span. If the requested zoom would crop either the pointer or the interaction, reduce the zoom; do not trade away the action for a larger scale. During ease-in, constrain the camera enough to keep the moving pointer inside the frame without retargeting the settled pose. After telemetry ends, hold the last cursor sample instead of wrapping to its starting position.
+
 Read [references/motion-and-capture.md](references/motion-and-capture.md) for the full timing preset, cadence rules, and jitter checks.
 
 ## Reframe for each output
