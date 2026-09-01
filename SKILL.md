@@ -41,6 +41,20 @@ Hide the native cursor when practical and reconstruct it from telemetry. A click
 
 Read [references/telemetry.md](references/telemetry.md) when creating or adapting a recorder. Validate the resulting JSON with `scripts/validate-telemetry.mjs`.
 
+## Reuse the motion engine
+
+For a new product adapter, install the tested vendor-neutral engine template instead of copying another product's camera code:
+
+```bash
+<skill-dir>/scripts/install-engine.sh path/to/product-demo-engine
+cd path/to/product-demo-engine
+npm ci
+npm test
+npm run typecheck
+```
+
+The template in `assets/engine` owns camera sessions, cursor motion, aspect-aware framing, caret capture and tracking, typing-to-submit phases, standard output presets, and regression tests. Keep those modules product-neutral. The adapter owns the real flow, selectors, consent-sensitive actions, brand frame, captions, composition registration, and render command. Change a shared motion rule in the public engine first, then consume it from adapters; do not fork behavior silently.
+
 ## Motion and framing
 
 Use one stable camera pose for a related click session:
@@ -77,7 +91,7 @@ The skill uses a canonical permissively licensed mouse click when available, but
 
 ## Render
 
-Prefer a repo-native, reproducible renderer. A typical implementation uses Playwright or native automation for capture and Remotion or an equivalent deterministic compositor for the final MP4.
+Prefer a repo-native, reproducible renderer. Start from `assets/engine` when the repository does not already consume the public engine. A typical implementation uses Playwright or native automation for capture and Remotion or an equivalent deterministic compositor for the final MP4.
 
 Keep style values in one preset:
 
