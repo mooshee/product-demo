@@ -74,6 +74,21 @@ for (const [index, click] of (log.clicks ?? []).entries()) {
   if (click.interactionKind === "typing" && click.typeEndMs == null) {
     fail(`${prefix}.typeEndMs is required for a typing interaction`);
   }
+  if (click.interactionKind === "typing" && (!Array.isArray(click.caretTrack) || click.caretTrack.length === 0)) {
+    fail(`${prefix}.caretTrack is required for a typing interaction`);
+  }
+  let previousCaretTime = click.tMs;
+  for (const [caretIndex, sample] of (click.caretTrack ?? []).entries()) {
+    if (!finite(sample.tMs)
+      || sample.tMs < previousCaretTime
+      || sample.tMs > (click.typeEndMs ?? log.durationMs)) {
+      fail(`${prefix}.caretTrack[${caretIndex}].tMs must be sorted and within the typing span`);
+    }
+    if (!inside(sample.x, width) || !inside(sample.y, height)) {
+      fail(`${prefix}.caretTrack[${caretIndex}] must be inside the viewport`);
+    }
+    previousCaretTime = sample.tMs;
+  }
   previousClickTime = click.tMs;
 }
 

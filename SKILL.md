@@ -34,7 +34,7 @@ Capture a stable product viewport and log, on the same monotonic clock:
 - cursor samples;
 - intentional click time and coordinates;
 - target bounds, action label, and related-click cluster;
-- typing start and end;
+- typing start, end, and caret samples after each character;
 - named result beats and optional captions.
 
 Hide the native cursor when practical and reconstruct it from telemetry. A click should be recorded only when it advances the story; do not log setup clicks, hover probes, or cleanup movements.
@@ -55,7 +55,7 @@ Use one stable camera pose for a related click session:
 
 Smooth the synthetic cursor with a zero-velocity ease, cap its speed, and fade it after a short idle hold. Leave it on the completed action until it fades. Never move it away merely to clear the frame. Add a 300–400 ms focus pause after selecting a text field before typing begins.
 
-Fit each settled camera pose to the active phase. During text entry, use a tighter detail that keeps the entered text and relevant field context readable; the field's inactive outer edge may crop. As typing ends, start a smooth pullback toward the related submit action. Settle before the click with the complete field and button visible together. Link these phases with typed/submit interaction metadata instead of button-label guesses. If the requested zoom would crop the pointer or the active phase, reduce it. During ease-in, keep the moving pointer inside the frame without retargeting the settled pose. After telemetry ends, hold the last cursor sample instead of wrapping to its starting position.
+Fit each settled camera pose to the active phase. During text entry, use a tighter detail and follow the recorded caret with a short smoothed lag so newly entered text stays visible; never derive the camera from DOM repainting. The field's inactive outer edge may crop. As typing ends, start a smooth pullback toward the related submit action. Settle before the click with the complete field and button visible together. Link these phases with typed/submit interaction metadata instead of button-label guesses. If the requested zoom would crop the pointer, caret, or active phase, reduce it. During ease-in, keep the moving pointer inside the frame without retargeting the settled pose. After telemetry ends, hold the final cursor and caret samples instead of wrapping either track.
 
 Read [references/motion-and-capture.md](references/motion-and-capture.md) for the full timing preset, cadence rules, and jitter checks.
 

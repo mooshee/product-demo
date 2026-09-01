@@ -40,6 +40,7 @@ Store all times as integer milliseconds from one monotonic recording start. Coor
 - A target rectangle has positive width and height.
 - `tDepartMs <= tMs`.
 - `typeEndMs`, when present, is not earlier than `tMs` and does not exceed the duration.
+- `caretTrack`, on a `typing` event, contains time-sorted caret-center samples within the typing span and source viewport. Record a sample after each character when possible.
 - `label` describes the action; `cluster` groups clicks that should share one camera pose.
 - `interactionKind` is `control`, `typing`, or `submit`. Use `typing` and `submit` only for linked text-entry flows.
 - A linked typing and submit pair shares one non-empty `interactionGroup`. This drives the close typing detail and the full field-plus-button pose before submission; camera code must not guess from labels.
@@ -52,3 +53,5 @@ node <skill-dir>/scripts/validate-telemetry.mjs path/to/demo.telemetry.json
 ```
 
 The validator checks the structural and timing invariants. It cannot prove that the named action or success state is true; verify those against the real capture.
+
+Older captures without caret samples may use a renderer's documented timed field-position fallback. New `typing` telemetry must include the real caret track.

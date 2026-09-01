@@ -71,6 +71,8 @@ Use this only when the brief asks to keep the output zoomed in:
 - Play the complete click transient; do not cut a press/release sample to an arbitrary frame count.
 - Pause 0.3–0.4 seconds after focusing a field before typing.
 - Type through the real UI at a short fixed delay or time-compress a logged typing span. Do not replace the UI with fabricated text.
+- Record the real caret position after each character when the control exposes it. Follow that track with roughly 100–200 ms of camera lag and smooth interpolation. Use a timed left-to-right field fallback only for an older capture without caret telemetry.
+- Hand camera control from the mouse to the caret during the post-click focus pause. Once typing begins, the caret—not the idle mouse—defines the typing detail.
 - Treat typing and submit as linked camera phases. Mark both events with an interaction kind and shared interaction group; do not infer the relationship from labels such as `Send` or `Save`.
 - Keep a tighter, stable detail while characters enter. Start the pullback when typing ends, aim for about two seconds of lead when capture timing permits, use a 1.4–1.6 second ease, and settle 0.3–0.6 seconds before the submit click.
 - The settled submit pose must show the complete field and button together, even when that requires a smaller scale than the typing detail.
