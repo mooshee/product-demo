@@ -49,6 +49,7 @@ Use this only when the brief asks to keep the output zoomed in:
 - Ease between the persistent and focused poses over roughly 1-1.5 seconds. Hold one focus through a related interaction and return to the persistent crop after the result hold.
 - Compute a safe persistent scale across the recording's interaction sessions. It must never force a click transition to zoom out merely to recover a wide active control.
 - Keep overview and persistent framing as separate render modes so one capture can produce both without being recorded again.
+- For the final interaction, hold the focused result through the end instead of returning to a cursor-led crop after the pointer has faded.
 
 ## Cursor preset
 
