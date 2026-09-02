@@ -58,7 +58,7 @@ npm run typecheck
 
 ## More Open Skills
 
-Explore the [Moosh Works Open Skills catalog](https://mooshworks.com/skills/) or try [ChatGPT Query Research](https://github.com/mooshee/chatgpt-search-query-mining), an experimental skill for turning a controlled ChatGPT query cluster into a source-backed content plan.
+Explore the [Moosh Works Open Skills catalog](https://mooshworks.com/skills/) or try [ChatGPT Query Research](https://github.com/mooshee/chatgpt-search-query-mining), a public skill for turning a controlled ChatGPT query cluster into a source-backed content plan.
 
 ## Author & License
 
