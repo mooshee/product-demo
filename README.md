@@ -1,30 +1,30 @@
-# Scripted Product Demo
+# Scripted Product Demo: One Capture, 6 Video Formats
 
-An open Agent Skill from [Moosh Works](https://mooshworks.com/skills/) for creating polished, repeatable real-product walkthroughs. It records real interactions and renders smooth, telemetry-driven demo videos in source, wide, vertical, square, classic, and tall formats, with optional persistent cursor-follow framing.
+Record a real product walkthrough once, then render polished MP4s for source, wide, vertical, square, classic, and tall layouts. This open Agent Skill from [Moosh Works](https://mooshworks.com/skills/) uses interaction telemetry to rebuild the cursor, time camera moves to clicks and typing, keep privacy masks attached to the source, and reframe each format around the action.
 
-The workflow adds a reconstructed cursor, click-synchronized camera moves, caret-follow typing, tactile click feedback, source-tracked privacy masks, branded framing, action captions, and reproducible MP4 output while keeping private sessions and product-specific working renders out of git. One capture can produce every supported format through action-aware reframing rather than fixed center crops.
+You keep selectors, captions, brand framing, and product-specific render code in your adapter. The tested TypeScript engine handles the shared camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Optional cursor-follow framing keeps vertical and square cuts focused between interactions.
 
-Scripted Product Demo automates capture and motion polish. It is not a clone or full replacement for Screen Studio’s desktop editor.
+Scripted Product Demo handles repeatable capture and motion polish. It does not replace Screen Studio’s desktop editor.
 
-## See It in Motion
+## Watch a Finished Demo
 
-Click either animated preview to watch the full H.264 MP4 with sound.
+Open either animated preview to play the full H.264 MP4 with sound.
 
-### Screen Studio-Style Polish, Fully Scripted
+### Scripted Camera, Cursor, Typing, and Clicks
 
-[![Scripted Product Demo adding automatic camera moves, a reconstructed cursor, caret-follow typing, and click feedback to a real product workflow](examples/screen-studio-style-product-demo.gif)](examples/screen-studio-style-product-demo.mp4)
+[![Scripted Product Demo adding automatic camera moves, a reconstructed cursor, caret-follow typing, and click feedback to a recorded product flow](examples/screen-studio-style-product-demo.gif)](examples/screen-studio-style-product-demo.mp4)
 
-Record one real flow, then apply smooth camera moves, cursor motion, typing focus, click feedback, captions, and aspect-aware reframing through code.
+The renderer applies camera moves, cursor motion, typing focus, click feedback, captions, and aspect-aware reframing to one real capture.
 
-### Privacy From Capture Through Export
+### Privacy Masks That Follow the Source
 
 [![The same LinePort recording comparing blur applied before capture with tracked blur applied to existing footage](examples/privacy-blur-comparison.gif)](examples/privacy-blur-comparison.mp4)
 
 New recordings can blur a measured DOM element before its pixels are captured. Existing footage uses the same tight element bounds inside the transformed source layer, so the blur follows every camera move without covering neighboring controls.
 
-The repository includes a tested TypeScript engine template under [`skills/scripted-product-demo/assets/engine`](skills/scripted-product-demo/assets/engine). It provides the reusable camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, real workflow, branding, captions, and compositor shell.
+The repository includes a tested TypeScript engine template under [`skills/scripted-product-demo/assets/engine`](skills/scripted-product-demo/assets/engine). It provides the reusable camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, recorded flow, branding, captions, and compositor shell.
 
-Channel-specific skills can wrap this core for YouTube production, personal-brand presentation, or Marketplace review requirements without duplicating the capture and motion system.
+A wrapper can add YouTube, personal-brand, or Marketplace review rules without copying the capture and motion engine.
 
 ## Install
 
@@ -56,9 +56,9 @@ npm test
 npm run typecheck
 ```
 
-## More Open Skills
+## Need the Research Skill?
 
-Explore the [Moosh Works Open Skills catalog](https://mooshworks.com/skills/) or try [ChatGPT Query Research](https://github.com/mooshee/chatgpt-search-query-mining), a public skill for turning a controlled ChatGPT query cluster into a source-backed content plan.
+[ChatGPT Query Research](https://github.com/mooshee/chatgpt-search-query-mining) turns web-search queries from a ChatGPT session you control into a source-backed content plan. See both install commands on the [Moosh Works skills page](https://mooshworks.com/skills/).
 
 ## Author & License
 
