@@ -28,6 +28,8 @@ External actions still need the authority required by the surrounding task. Reco
 
 Use the product's real test environment and the most reliable browser or native-app automation available. Keep secrets and session state out of commands, telemetry, screenshots, and git.
 
+For a native-app, menu-bar, installer, permission, or cross-application flow, capture the full display only after preparing a reversible clean desktop. Use a neutral background, hide desktop items and the Dock, suppress notifications, close unrelated windows, and keep only story-relevant menu-bar items visible. Never move or delete the user's files to clean the frame. Read [references/fullscreen-capture.md](references/fullscreen-capture.md) and use `scripts/fullscreen-capture-mode.sh` before recording; restore the prior desktop state as soon as capture ends.
+
 Capture a stable product viewport and log, on the same monotonic clock:
 
 - source-frame timestamps;

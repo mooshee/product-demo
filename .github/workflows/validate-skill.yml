@@ -31,9 +31,15 @@ jobs:
           test -f skills/scripted-product-demo/agents/openai.yaml
           test -x skills/scripted-product-demo/scripts/install-engine.sh
           test -x skills/scripted-product-demo/scripts/prepare-click-audio.sh
+          test -x skills/scripted-product-demo/scripts/fullscreen-capture-mode.sh
           test -x skills/scripted-product-demo/scripts/validate-telemetry.mjs
+          test -f skills/scripted-product-demo/references/fullscreen-capture.md
+          test -f skills/scripted-product-demo/assets/clean-desktop.png
           grep -q '^name: scripted-product-demo$' skills/scripted-product-demo/SKILL.md
           grep -q '\$scripted-product-demo' skills/scripted-product-demo/agents/openai.yaml
+
+      - name: Validate shell helpers
+        run: bash -n skills/scripted-product-demo/scripts/*.sh
 
       - name: Test and type-check the motion engine
         working-directory: skills/scripted-product-demo/assets/engine

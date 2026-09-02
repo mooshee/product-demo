@@ -1,6 +1,6 @@
 # Scripted Product Demo: One Capture, 6 Video Formats
 
-Record a real product walkthrough once, then render polished MP4s for source, wide, vertical, square, classic, and tall layouts. This open Agent Skill from [Moosh Works](https://mooshworks.com/skills/) uses interaction telemetry to rebuild the cursor, time camera moves to clicks and typing, keep privacy masks attached to the source, and reframe each format around the action.
+Record a real product walkthrough once, then render polished MP4s for source, wide, vertical, square, classic, and tall layouts. This open Agent Skill from [Moosh Works](https://mooshworks.com/skills/) uses interaction telemetry to rebuild the cursor, time camera moves to clicks and typing, keep privacy masks attached to the source, and reframe each format around the action. Browser-only and full-screen native flows share the same motion engine; the native path adds reversible desktop cleanup for installers, app switches, permission sheets, and menu-bar apps.
 
 You keep selectors, captions, brand framing, and product-specific render code in your adapter. The tested TypeScript engine handles the shared camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Optional cursor-follow framing keeps vertical and square cuts focused between interactions.
 
@@ -23,6 +23,8 @@ The renderer applies camera moves, cursor motion, typing focus, click feedback, 
 New recordings can blur a measured DOM element before its pixels are captured. Existing footage uses the same tight element bounds inside the transformed source layer, so the blur follows every camera move without covering neighboring controls.
 
 The repository includes a tested TypeScript engine template under [`skills/scripted-product-demo/assets/engine`](skills/scripted-product-demo/assets/engine). It provides the reusable camera, cursor, caret, privacy-mask, typing-to-submit, and aspect-ratio logic. Product adapters keep their selectors, recorded flow, branding, captions, and compositor shell.
+
+For full-screen capture, the skill includes a neutral desktop background and a reversible macOS helper that hides desktop items and the Dock without moving or deleting files. The original desktop settings and wallpapers are restored after the take.
 
 A wrapper can add YouTube, personal-brand, or Marketplace review rules without copying the capture and motion engine.
 
