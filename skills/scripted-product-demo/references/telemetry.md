@@ -61,7 +61,8 @@ Store all times as integer milliseconds from one monotonic recording start. Coor
 Run:
 
 ```bash
-node <skill-dir>/scripts/validate-telemetry.mjs path/to/demo.telemetry.json
+validate-telemetry path/to/demo.telemetry.json
+# or: node <skill-dir>/scripts/validate-telemetry.mjs path/to/demo.telemetry.json
 ```
 
 The validator checks the structural and timing invariants. It cannot prove that the named action or success state is true; verify those against the real capture.

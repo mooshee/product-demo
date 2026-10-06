@@ -1,0 +1,34 @@
+{
+  "name": "send-a-message",
+  "viewport": { "width": 1600, "height": 900 },
+  "captureOffsetMs": 120,
+  "durationMs": 12800,
+  "cursorTrack": [
+    { "tMs": 0, "x": 80, "y": 760 },
+    { "tMs": 2000, "x": 652, "y": 691 }
+  ],
+  "clicks": [
+    {
+      "tDepartMs": 2050,
+      "tMs": 3268,
+      "x": 652,
+      "y": 691,
+      "rect": { "x": 600, "y": 670, "width": 104, "height": 42 },
+      "label": "Open the provider picker",
+      "cluster": "provider",
+      "caption": "Choose a sending account",
+      "typeEndMs": null,
+      "interactionKind": "control",
+      "interactionGroup": null
+    }
+  ],
+  "privacyMasks": [
+    {
+      "id": "account-email",
+      "reason": "personal identifier",
+      "treatment": "solid",
+      "paddingPx": 8,
+      "rect": { "x": 1210, "y": 24, "width": 240, "height": 28 }
+    }
+  ]
+}

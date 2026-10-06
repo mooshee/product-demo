@@ -1,0 +1,12 @@
+# Author: Daniel Hallman
+
+[workspace]
+members = [
+    "crates/telemetry-validator",
+]
+resolver = "3"
+
+[workspace.package]
+edition = "2024"
+authors = ["Daniel Hallman"]
+license = "MIT"

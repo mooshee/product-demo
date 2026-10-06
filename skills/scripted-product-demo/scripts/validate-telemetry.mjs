@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Authored by Daniel Hallman.
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -7,6 +8,23 @@ const telemetryPath = process.argv[2];
 if (!telemetryPath) {
   console.error("Usage: validate-telemetry.mjs PATH.json");
   process.exit(64);
+}
+
+// Fast path: use compiled native Rust validate-telemetry if available
+const rustBinCandidates = [
+  path.join(process.env.HOME || "", ".local/bin/validate-telemetry"),
+  path.join(path.dirname(new URL(import.meta.url).pathname), "../target/release/validate-telemetry"),
+  path.join(path.dirname(new URL(import.meta.url).pathname), "../target/debug/validate-telemetry"),
+];
+for (const bin of rustBinCandidates) {
+  if (fs.existsSync(bin)) {
+    try {
+      execFileSync(bin, [telemetryPath], { stdio: "inherit" });
+      process.exit(0);
+    } catch (err) {
+      process.exit(err.status ?? 1);
+    }
+  }
 }
 
 let log;

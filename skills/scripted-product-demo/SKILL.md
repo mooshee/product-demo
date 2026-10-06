@@ -43,7 +43,7 @@ Use fictional or synthetic records whenever possible. Choose privacy handling fr
 
 Hide the native cursor when practical and reconstruct it from telemetry. A click should be recorded only when it advances the story; do not log setup clicks, hover probes, or cleanup movements.
 
-Read [references/telemetry.md](references/telemetry.md) when creating or adapting a recorder. Validate the resulting JSON with `scripts/validate-telemetry.mjs`.
+Read [references/telemetry.md](references/telemetry.md) when creating or adapting a recorder. Validate the resulting JSON with native Rust `validate-telemetry` (or `scripts/validate-telemetry.mjs`).
 
 ## Reuse the motion engine
 
