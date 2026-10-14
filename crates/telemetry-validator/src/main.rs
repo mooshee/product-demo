@@ -7,11 +7,17 @@ use telemetry_validator::validate_telemetry_value;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-    if args.len() < 2 || args[1] == "-h" || args[1] == "--help" {
+    if args.len() < 2 {
+        eprintln!("Usage: validate-telemetry PATH.json");
+        exit(64);
+    }
+    if args[1] == "-h" || args[1] == "--help" {
         println!("Usage: validate-telemetry PATH.json");
         println!();
-        println!("Validate product demo interaction telemetry JSON against structural and timing invariants.");
-        exit(if args.len() < 2 { 64 } else { 0 });
+        println!(
+            "Validate product demo interaction telemetry JSON against structural and timing invariants."
+        );
+        exit(0);
     }
 
     let file_path = &args[1];

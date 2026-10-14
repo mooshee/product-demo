@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -15,6 +19,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -32,14 +39,19 @@ jobs:
           test -x skills/scripted-product-demo/scripts/install-engine.sh
           test -x skills/scripted-product-demo/scripts/prepare-click-audio.sh
           test -x skills/scripted-product-demo/scripts/fullscreen-capture-mode.sh
-          test -x skills/scripted-product-demo/scripts/validate-telemetry.mjs
+          test -x skills/scripted-product-demo/scripts/validate-telemetry
           test -f skills/scripted-product-demo/references/fullscreen-capture.md
           test -f skills/scripted-product-demo/assets/clean-desktop.png
           grep -q '^name: scripted-product-demo$' skills/scripted-product-demo/SKILL.md
           grep -q '\$scripted-product-demo' skills/scripted-product-demo/agents/openai.yaml
 
       - name: Validate shell helpers
-        run: bash -n skills/scripted-product-demo/scripts/*.sh
+        run: bash -n skills/scripted-product-demo/scripts/*.sh skills/scripted-product-demo/scripts/validate-telemetry
+
+      - name: Test native telemetry validator
+        run: |
+          cargo test --all-targets
+          ./skills/scripted-product-demo/scripts/validate-telemetry tests/fixtures/sample.telemetry.json
 
       - name: Test and type-check the motion engine
         working-directory: skills/scripted-product-demo/assets/engine
